@@ -4,6 +4,7 @@ import requests
 from requests.auth import HTTPBasicAuth
 import time;
 import os # If you have to validate secret key without using base64encode.org - os.environ["SECRET_KEY"]
+import validators
 
 
 root=Tk()
@@ -71,8 +72,8 @@ def submit():
             "AccountReference" : AccountReference,
             "TransactionDesc" : TransactionDesc
         }
-        if not validators.validurl:
-            RaiseError('Invalid URL')
+        if not validators.url(CallBackURL):
+            RaiseError('Invalid CallBack URL')
         else:
             pass
         if empty(access_token):
@@ -84,6 +85,7 @@ def submit():
     output = {"CallBack":{"CallBackURL": "http://mpesa-requestbin.herokuapp.com/1mrwy3n1"}  }
     lbl_Response.configure(text=output)
 
+    response = requests.post(api_url, request= json headers=headers)
 
 
 
@@ -120,8 +122,8 @@ lbl_Response.grid(row=5, column=1)
 
 
 #=====================================Add Some Buttons============================================================
-btnReset=Button(f1,padx=16,pady=8,bd=16,fg="black",font=('arial',16,'bold'),width=10,text="Reset",bg="grey",command=Reset).grid(row=1,column=3)
-btnExit=Button(f1,padx=16,pady=8,bd=16,fg="black",font=('arial',16,'bold'),width=10,text="Exit",bg="brown",command=formExit).grid(row=2,column=3)
+btnReset=Button(f1,padx=16,pady=8,bd=16,fg="black",font=('arial',16,'bold'),width=10,text="Reset",bg="grey",command=Reset).grid(row=1,column=2)
+btnExit=Button(f1,padx=16,pady=8,bd=16,fg="black",font=('arial',16,'bold'),width=10,text="Exit",bg="brown",command=formExit).grid(row=2,column=2)
 btnPost=Button(f1,padx=16,pady=8,bd=16,fg="black",font=('arial',16,'bold'),width=10,text="POST",bg="green",command=submit).grid(row=4,column=1)
 #I'll validate this if need be. Wasn't part of assignment
 
