@@ -4,11 +4,12 @@ import requests
 from requests.auth import HTTPBasicAuth
 import time;
 import os # If you have to validate secret key without using base64encode.org - os.environ["SECRET_KEY"]
-import validators
+
+#sudo apt-get install python python-tk - to install TK interface in Ubuntu. This comes set in windows after installing python
 
 
 root=Tk()
-root.geometry("800x600")
+root.geometry("1200x800")
 root.title("Andela LevelUp C2B")
 
 SunKenTop=Frame(root, width=800,relief=SUNKEN)
@@ -20,8 +21,8 @@ lblInfo.grid(row=0,column=0)
 f1=Frame(root,width=800,height=400,relief=SUNKEN)
 f1.pack(side=LEFT)
 
-
-#assign to dictionary
+#Assign current Timestamp
+Timestamp = time.time()
 
 #Define Form Functions
 def formExit():
@@ -34,6 +35,10 @@ def Reset():
     ResponseType.set("")
     ConfirmationURL.set("")
     ValidationURL.set("")
+    txt_amount.set("")
+    PartyA.set("")
+    PartyB.set("")
+    PhoneNumber.set("")
 
 #Declare Variables
 access_token = StringVar()
@@ -42,8 +47,13 @@ ShortCode = StringVar()
 ResponseType = StringVar()
 ConfirmationURL = StringVar()
 ValidationURL = StringVar()
+txt_amount = StringVar()
+PartyA = StringVar()
+PartyB = StringVar()
+PhoneNumber = StringVar()
 
-Timestamp = time.time()
+
+
 
 
 
@@ -85,7 +95,7 @@ def submit():
     output = {"CallBack":{"CallBackURL": "http://mpesa-requestbin.herokuapp.com/1mrwy3n1"}  }
     lbl_Response.configure(text=output)
 
-    response = requests.post(api_url, request= json headers=headers)
+    response = requests.post(api_url, request= json, headers=access_token)
 
 
 
@@ -120,11 +130,46 @@ txt_ResponseType.grid(row=3,column=1)
 lbl_Response= Label(f1, font=('arial', 16, 'bold'),text="Response: ",bd=16,anchor="w")
 lbl_Response.grid(row=5, column=1)
 
+#Amount
+lbl_amount= Label(f1, font=('arial', 16, 'bold'),text="Amount",bd=16,anchor="w")
+lbl_amount.grid(row=0, column=2)
+
+txt_amount=Entry(f1, font=('arial',16,'bold'),textvariable=txt_amount,bd=10,insertwidth=4,bg="powder blue",justify='right')
+txt_amount.config(show="*")
+txt_amount.grid(row=0,column=3)
+
+#PartyA
+lbl_PartyA= Label(f1, font=('arial', 16, 'bold'),text="Party A",bd=16,anchor="w")
+lbl_PartyA.grid(row=1, column=2)
+
+txt_PartyA=Entry(f1, font=('arial',16,'bold'),textvariable=PartyA,bd=10,insertwidth=4,bg="powder blue",justify='right')
+txt_PartyA.grid(row=1,column=3)
+
+#PartyA
+lbl_PartyB= Label(f1, font=('arial', 16, 'bold'),text="Party B",bd=16,anchor="w")
+lbl_PartyB.grid(row=2, column=2)
+
+txt_PartyB=Entry(f1, font=('arial',16,'bold'),textvariable=PartyB,bd=10,insertwidth=4,bg="powder blue",justify='right')
+txt_PartyB.grid(row=2,column=3)
+
+#PartyA
+lbl_PartyB= Label(f1, font=('arial', 16, 'bold'),text="Party B",bd=16,anchor="w")
+lbl_PartyB.grid(row=2, column=2)
+
+txt_PartyB=Entry(f1, font=('arial',16,'bold'),textvariable=PartyB,bd=10,insertwidth=4,bg="powder blue",justify='right')
+txt_PartyB.grid(row=2,column=3)
+
+#PhoneNumber
+lbl_PartyB= Label(f1, font=('arial', 16, 'bold'),text="Phone",bd=16,anchor="w")
+lbl_PartyB.grid(row=3, column=2)
+
+txt_Phonenumber=Entry(f1, font=('arial',16,'bold'),textvariable=PhoneNumber,bd=10,insertwidth=4,bg="powder blue",justify='right')
+txt_Phonenumber.grid(row=3,column=3)
 
 #=====================================Add Some Buttons============================================================
-btnReset=Button(f1,padx=16,pady=8,bd=16,fg="black",font=('arial',16,'bold'),width=10,text="Reset",bg="grey",command=Reset).grid(row=1,column=2)
-btnExit=Button(f1,padx=16,pady=8,bd=16,fg="black",font=('arial',16,'bold'),width=10,text="Exit",bg="brown",command=formExit).grid(row=2,column=2)
-btnPost=Button(f1,padx=16,pady=8,bd=16,fg="black",font=('arial',16,'bold'),width=10,text="POST",bg="green",command=submit).grid(row=4,column=1)
+btnReset=Button(f1,padx=16,pady=8,bd=16,fg="black",font=('arial',16,'bold'),width=10,text="Reset",bg="grey",command=Reset).grid(row=1,column=4)
+btnExit=Button(f1,padx=16,pady=8,bd=16,fg="black",font=('arial',16,'bold'),width=10,text="Exit",bg="brown",command=formExit).grid(row=2,column=4)
+btnPost=Button(f1,padx=20,pady=14,bd=16,fg="black",font=('arial',16,'bold'),width=10,text="POST",bg="green",command=submit).grid(row=4,column=2)
 #I'll validate this if need be. Wasn't part of assignment
 
 root.mainloop()
